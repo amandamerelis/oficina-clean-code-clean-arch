@@ -1,21 +1,14 @@
 package com.colatina.app.service.dataprovider.entity;
 
-import com.colatina.app.service.core.domain.AccountDomain;
 import com.colatina.app.service.core.domain.enumeration.TransactionStatus;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -23,7 +16,18 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Table(name = "transaction")
+@AllArgsConstructor
+@NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class TransactionEntity {
+
+    public TransactionEntity(AccountEntity accountOrigin, AccountEntity accountDestination, BigDecimal value, String type, TransactionStatus status) {
+        this.accountOrigin = accountOrigin;
+        this.accountDestination = accountDestination;
+        this.value = value;
+        this.type = type;
+        this.status = status;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_transaction")
@@ -43,10 +47,12 @@ public class TransactionEntity {
     private BigDecimal value;
 
     @Column(name = "created_at")
+    @CreatedDate
     private LocalDateTime createdAt;
 
     @Column(name = "status")
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private TransactionStatus status;
 
     @Column(name = "type")
     private String type;

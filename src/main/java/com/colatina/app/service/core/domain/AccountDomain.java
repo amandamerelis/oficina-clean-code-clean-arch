@@ -36,8 +36,7 @@ public class AccountDomain {
     @Past
     private LocalDate birthDate;
 
-    @NotNull
-    private WalletDomain wallet;
+    private WalletDomain walletDomain;
 
     public boolean isUnderage() {
         LocalDate today = LocalDate.now();

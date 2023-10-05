@@ -7,6 +7,6 @@ public interface AccountGateway {
 
     AccountDomain create(AccountDomain account);
 
-    AccountDomain changeAccountStatus(AccountDomain account, AccountStatus status);
+    AccountDomain changeAccountStatus(AccountStatus status, Integer id);
 
 }

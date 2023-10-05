@@ -10,10 +10,9 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ChangeStatusUseCase {
 
-    AccountGateway accountGateway;
-
-    AccountDomain blockAccount(AccountDomain account){
-        return accountGateway.changeAccountStatus(account, AccountStatus.BLOCKED);
+    private final AccountGateway accountGateway;
+    public AccountDomain execute(AccountStatus status, Integer account_id){
+        return accountGateway.changeAccountStatus(status, account_id);
     }
 
 }

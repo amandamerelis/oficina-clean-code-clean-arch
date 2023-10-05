@@ -16,15 +16,17 @@ import java.math.BigDecimal;
 public class CreateAccountUseCase {
 
     private final AccountGateway accountGateway;
+    private final NegativeCpfGateway negativeCpfGateway;
 
     public void execute(AccountDomain account) {
+
         if(account.isUnderage()){
-            throw new BusinessException("É necessário ter mais de 18 anos para criar uma conta.");
+            throw new BusinessException("The user must be of legal age to create an account.");
         }
 
-        WalletDomain walletDomain = new WalletDomain();
-        walletDomain.setBalance(BigDecimal.ZERO);
-        account.setWallet(walletDomain);
+        if(negativeCpfGateway.isNegativeCpf(account.getDocument())){
+            throw new BusinessException("The CPF must not be negative to create an account.");
+        }
 
         accountGateway.create(account);
     }

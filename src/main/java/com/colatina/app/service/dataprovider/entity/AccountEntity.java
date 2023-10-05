@@ -1,10 +1,13 @@
 package com.colatina.app.service.dataprovider.entity;
 
+import com.colatina.app.service.core.domain.enumeration.AccountStatus;
+import com.colatina.app.service.core.exception.BusinessException;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter
@@ -29,13 +32,28 @@ public class AccountEntity implements Serializable {
     private String document;
 
     @Column(name = "status")
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private AccountStatus status;
 
     @Column(name = "birth_date")
     private LocalDate birthDate;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "wallet_id", referencedColumnName = "id")
     private WalletEntity wallet;
+
+    public void withdraw(BigDecimal amount){
+        if (!status.isActive()){
+            throw new BusinessException("The account must be active to change its balance.");
+        }
+        wallet.subtractFromBalance(amount);
+    }
+
+    public void credit(BigDecimal amount){
+        if (!status.isActive()){
+            throw new BusinessException("The account must be active to change its balance.");
+        }
+        wallet.addToBalance(amount);
+    }
 
 }
