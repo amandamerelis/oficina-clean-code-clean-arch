@@ -50,7 +50,7 @@ public class TransactionAdapter implements TransactionGateway {
 
     @Override
     @Transactional
-    public TransactionDomain makeTransaction(CreateTransactionDTO transactionDTO) {
+    public TransactionDomain makeTransaction(CreateTransactionDTO transactionDTO) throws IllegalArgumentException {
         AccountEntity originAccount = accountRepository.findById(transactionDTO.getOriginId())
                 .orElseThrow(() -> new IllegalArgumentException("Origin account not found."));
 

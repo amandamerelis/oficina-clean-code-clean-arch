@@ -14,7 +14,7 @@ public class MakeTransactionUserCase {
 
     private final TransactionGateway transactionGateway;
 
-    public TransactionDomain execute(CreateTransactionDTO transactionDTO) {
+    public TransactionDomain execute(CreateTransactionDTO transactionDTO) throws IllegalArgumentException {
         return transactionGateway.makeTransaction(transactionDTO);
     }
 }

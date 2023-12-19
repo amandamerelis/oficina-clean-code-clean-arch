@@ -6,4 +6,4 @@ services:
       - POSTGRES_USER=database
       - POSTGRES_PASSWORD=database
     ports:
-      - 5432:5432
+      - 16700:5432

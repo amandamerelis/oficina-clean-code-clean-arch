@@ -28,6 +28,9 @@ public class CreateAccountUseCase {
             throw new BusinessException("The CPF must not be negative to create an account.");
         }
 
+        WalletDomain wallet = new WalletDomain();
+        wallet.setBalance(BigDecimal.ZERO);
+        account.setWalletDomain(wallet);
         accountGateway.create(account);
     }
 }

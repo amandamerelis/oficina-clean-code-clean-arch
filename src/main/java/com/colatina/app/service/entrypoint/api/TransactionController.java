@@ -45,7 +45,7 @@ public class TransactionController {
     }
 
     @PostMapping
-    public ResponseEntity<TransactionDomain> create(@RequestBody @Valid CreateTransactionDTO data) {
+    public ResponseEntity<TransactionDomain> create(@RequestBody @Valid CreateTransactionDTO data) throws IllegalArgumentException{
         return new ResponseEntity<>(makeTransactionUserCase.execute(data), HttpStatus.CREATED);
     }
 
