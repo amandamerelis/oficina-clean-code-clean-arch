@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-12-19T15:34:01-0300",
+    date = "2023-12-26T15:15:58-0300",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.3 (Azul Systems, Inc.)"
 )
 @Component
@@ -26,6 +26,7 @@ public class AccountInfoMapperImpl implements AccountInfoMapper {
         accountEntity.setId( dto.getId() );
         accountEntity.setName( dto.getName() );
         accountEntity.setLastName( dto.getLastName() );
+        accountEntity.setStatus( dto.getStatus() );
 
         return accountEntity;
     }
@@ -41,6 +42,7 @@ public class AccountInfoMapperImpl implements AccountInfoMapper {
         accountInfoDomain.setId( entity.getId() );
         accountInfoDomain.setName( entity.getName() );
         accountInfoDomain.setLastName( entity.getLastName() );
+        accountInfoDomain.setStatus( entity.getStatus() );
 
         return accountInfoDomain;
     }

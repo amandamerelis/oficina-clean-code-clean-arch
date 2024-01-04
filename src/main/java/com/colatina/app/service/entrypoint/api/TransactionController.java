@@ -26,13 +26,12 @@ public class TransactionController {
     private final MakeTransactionUserCase makeTransactionUserCase;
 
     @GetMapping("/account-statement/{account_id}")
-    public ResponseEntity<TransactionPageDTO> getAccountStatement(@PathVariable("account_id") Integer accountId,
-                                                                  @RequestHeader("start_date") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime startDate,
-                                                                  @RequestHeader("end_date") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime endDate,
+    public TransactionPageDTO getAccountStatement(@PathVariable("account_id") Integer accountId,
+                                                                  @RequestHeader("start_date") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime startDate,
+                                                                  @RequestHeader("end_date") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime endDate,
                                                                   @RequestParam(name = "page", defaultValue = "0") @PositiveOrZero Integer page,
                                                                   @RequestParam(name = "pageSize", defaultValue = "5") @Positive Integer pageSize) {
-        final TransactionPageDTO accountStatement = getAccountStatementUseCase.getAccountStatement(accountId, startDate, endDate, page, pageSize);
-        return new ResponseEntity<>(accountStatement, accountStatement.getTransactions().isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK);
+        return getAccountStatementUseCase.getAccountStatement(accountId, startDate, endDate, page, pageSize);
     }
 
     @GetMapping("/account-statement/{account_id}/{recipient_id}")
